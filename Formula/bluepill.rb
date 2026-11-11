@@ -7,6 +7,10 @@ class Bluepill < Formula
   license "MIT"
   head "https://github.com/nertwork/bluepill.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/nertwork/bluepill/releases/download/v1.1.0"
+    sha256 cellar: :any_skip_relocation, all: "9762296127fe17e5a4f9889b6ede99e8e9d3fd3b1805a8dd1dce4bc9f37b9eba"
+  end
 
   def install
     bin.install "server/bluepill_server.py" => "bluepill-server"

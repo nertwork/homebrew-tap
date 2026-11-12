@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint & Formula Syntax Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+
+      - name: Ruby Syntax Validation
+        run: |
+          echo "Validating Ruby syntax on all Formulae..."
+          find Formula -name "*.rb" -exec ruby -c {} +
+
+      - name: Formula Structure & URL Audit
+        run: |
+          python3 -c "
+          import glob
+          formulae = glob.glob("Formula/*.rb")
+          assert len(formulae) > 0, "No formulae found"
+          for f in formulae:
+              content = open(f).read()
+              assert "class " in content, f"{f} missing class definition"
+              assert "desc " in content, f"{f} missing desc"
+              assert "homepage " in content, f"{f} missing homepage"
+              assert "url " in content, f"{f} missing url"
+              assert "sha256 " in content, f"{f} missing sha256"
+              assert "def install" in content, f"{f} missing install definition"
+              assert "test do" in content, f"{f} missing test block"
+              print(f"Formula {f} structure validated successfully.")
+          "
+
+      - name: Zero-PII & Secret Audit
+        run: |
+          echo "Scanning for sensitive tokens or private keys..."
+          ! grep -rnE "BEGIN [A-Z]+ PRIVATE KEY|gh[pousr]_[A-Za-z0-9_]{36,}|AKIA[0-9A-Z]{16}" Formula/ README.md

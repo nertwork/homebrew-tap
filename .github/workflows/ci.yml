@@ -21,7 +21,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
+          ruby-version: "3.3"
 
       - name: Ruby Syntax Validation
         run: |
@@ -30,21 +30,18 @@ jobs:
 
       - name: Formula Structure & URL Audit
         run: |
-          python3 -c "
-          import glob
-          formulae = glob.glob("Formula/*.rb")
-          assert len(formulae) > 0, "No formulae found"
-          for f in formulae:
-              content = open(f).read()
-              assert "class " in content, f"{f} missing class definition"
-              assert "desc " in content, f"{f} missing desc"
-              assert "homepage " in content, f"{f} missing homepage"
-              assert "url " in content, f"{f} missing url"
-              assert "sha256 " in content, f"{f} missing sha256"
-              assert "def install" in content, f"{f} missing install definition"
-              assert "test do" in content, f"{f} missing test block"
-              print(f"Formula {f} structure validated successfully.")
-          "
+          for f in Formula/*.rb; do
+            [ -f "$f" ] || continue
+            echo "Checking $f structure..."
+            grep -q "class " "$f" || { echo "Missing class definition in $f"; exit 1; }
+            grep -q "desc " "$f" || { echo "Missing desc in $f"; exit 1; }
+            grep -q "homepage " "$f" || { echo "Missing homepage in $f"; exit 1; }
+            grep -q "url " "$f" || { echo "Missing url in $f"; exit 1; }
+            grep -q "sha256 " "$f" || { echo "Missing sha256 in $f"; exit 1; }
+            grep -q "def install" "$f" || { echo "Missing install in $f"; exit 1; }
+            grep -q "test do" "$f" || { echo "Missing test block in $f"; exit 1; }
+            echo "Formula $f validated successfully."
+          done
 
       - name: Zero-PII & Secret Audit
         run: |

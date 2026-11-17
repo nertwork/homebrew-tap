@@ -6,7 +6,7 @@ Official Homebrew formulas for Nertwork open-source tools on macOS (Apple Silico
 
 | Formula | Version | Description |
 | :--- | :--- | :--- |
-| **[`bluepill`](https://github.com/nertwork/bluepill)** | `1.1.0` | Headless zero-Electron macOS `chat.db` relay daemon (`bluepill-server`) + built-in Web UI (`http://localhost:1235/web`) + Direct SSH JSON-RPC (`stdio`) for **[BluePill](https://github.com/nertwork/bluepill)** |
+| **[`bluepill`](https://github.com/nertwork/bluepill)** | `1.2.1` | Headless zero-Electron macOS `chat.db` relay daemon (`bluepill-server`) + built-in Web UI (`http://localhost:1235/web`) + Direct SSH JSON-RPC (`stdio`) for **[BluePill](https://github.com/nertwork/bluepill)** |
 
 ## Quick Start
 

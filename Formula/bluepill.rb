@@ -1,15 +1,15 @@
 class Bluepill < Formula
   desc "Headless zero-Electron macOS iMessage, SMS & RCS relay daemon + Cloud Relay + Web UI for BluePill"
   homepage "https://bluepill.nertwork.com"
-  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.5.tar.gz"
-  sha256 "62ea3a6578892ce8a9e089a9d1d96c72c79f6f3d5e6978ed058fc89790f896c2"
-  version "1.2.5"
+  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.6.tar.gz"
+  sha256 "8e6a95399eb3018a2041b62006973c5ffd66e1332a9e866e6e540cff73eaf0b0"
+  version "1.2.6"
   license "MIT"
   head "https://github.com/nertwork/bluepill.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.5"
-    sha256 cellar: :any_skip_relocation, all: "a93a15dcc63d5996371ea95833d781e306a0261d6078b9a1baa94dd214475ccb"
+    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.6"
+    sha256 cellar: :any_skip_relocation, all: "4ddb59a545b7e7c185f0b5e31046fabef4d62781dc5da3776c6a305c06293d61"
   end
 
   def install
@@ -30,12 +30,16 @@ class Bluepill < Formula
 
   def caveats
     <<~EOS
-      BluePill Cloud Relay (Zero Port-Forwarding — Recommended):
-        1. Claim your free beta relay endpoint & tunnel token:
-           https://bluepill.nertwork.com/signup
-        2. Pair this Mac and start the background relay + Cloud Relay tunnel:
-           bluepill-server relay-setup --token <YOUR_TUNNEL_TOKEN>
-           brew services start bluepill
+      BluePill Cloud Setup (Default — Zero Port-Forwarding):
+        1. bluepill-server login
+           (Opens https://bluepill.nertwork.com/portal to link your Mac to BluePill Cloud)
+        2. brew services start bluepill
+
+      Cloud Managed Updates (BluePill Cloud Perk):
+        When linked to BluePill Cloud, background stable update checks run
+        automatically and require explicit confirmation in the UI or via:
+          bluepill-server update-status
+          bluepill-server update --confirm
 
       Local-Only / iCloud Hub Preflight:
         Verify Full Disk Access for Messages, Notes, Calendar, and Photos:
@@ -58,7 +62,7 @@ class Bluepill < Formula
   end
 
   test do
-    assert_match "bluepill-server 1.2.5", shell_output("#{bin}/bluepill-server --version")
+    assert_match "bluepill-server 1.2.6", shell_output("#{bin}/bluepill-server --version")
     help_out = shell_output("#{bin}/bluepill-server --help")
     if help_out.include?("preflight")
       assert_match "\"status\":", shell_output("#{bin}/bluepill-server preflight --no-fix")

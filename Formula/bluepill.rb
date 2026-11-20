@@ -1,15 +1,15 @@
 class Bluepill < Formula
   desc "Headless zero-Electron macOS iMessage, SMS & RCS relay daemon + Cloud Relay + Web UI for BluePill"
   homepage "https://bluepill.nertwork.com"
-  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.6.tar.gz"
-  sha256 "8e6a95399eb3018a2041b62006973c5ffd66e1332a9e866e6e540cff73eaf0b0"
-  version "1.2.6"
+  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.7.tar.gz"
+  sha256 "3beeb0b1386f6cc5183106c25a9e72dca3b1c0a5c9c5cd23"
+  version "1.2.7"
   license "MIT"
   head "https://github.com/nertwork/bluepill.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.6"
-    sha256 cellar: :any_skip_relocation, all: "4ddb59a545b7e7c185f0b5e31046fabef4d62781dc5da3776c6a305c06293d61"
+    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.7"
+    sha256 cellar: :any_skip_relocation, all: "19a9e06a9f2382063c179b39ddaf69d3a7e944f75ab5bb0e0132b4ecad2d1570"
   end
 
   def install
@@ -62,7 +62,7 @@ class Bluepill < Formula
   end
 
   test do
-    assert_match "bluepill-server 1.2.6", shell_output("#{bin}/bluepill-server --version")
+    assert_match "bluepill-server 1.2.7", shell_output("#{bin}/bluepill-server --version")
     help_out = shell_output("#{bin}/bluepill-server --help")
     if help_out.include?("preflight")
       assert_match "\"status\":", shell_output("#{bin}/bluepill-server preflight --no-fix")

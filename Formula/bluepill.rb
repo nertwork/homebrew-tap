@@ -1,15 +1,15 @@
 class Bluepill < Formula
   desc "Headless zero-Electron macOS iMessage, SMS & RCS relay daemon + Cloud Relay + Web UI for BluePill"
   homepage "https://bluepill.nertwork.com"
-  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.7.tar.gz"
-  sha256 "3beeb0b1386f6cc5183106c25a9e72dca3b1c0a5c9c5cd23"
-  version "1.2.7"
+  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.13.tar.gz"
+  sha256 "b5ef27eb73e6b7a07cb5c9c305b10f3ebb6b3fb154691e5b24aafb74e4b8b1d9"
+  version "1.2.13"
   license "MIT"
   head "https://github.com/nertwork/bluepill.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.7"
-    sha256 cellar: :any_skip_relocation, all: "19a9e06a9f2382063c179b39ddaf69d3a7e944f75ab5bb0e0132b4ecad2d1570"
+    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.13"
+    sha256 cellar: :any_skip_relocation, all: "f3f887dec14fa445ce69e0ce31cd67a200ac44bd8acc060a58b8ed6dd17dc0d0"
   end
 
   def install
@@ -34,6 +34,11 @@ class Bluepill < Formula
         1. bluepill-server login
            (Opens https://bluepill.nertwork.com/portal to link your Mac to BluePill Cloud)
         2. brew services start bluepill
+        3. Grant macOS Permissions (System Settings -> Privacy & Security):
+           - Full Disk Access: allow Terminal / Homebrew Python (reads chat.db, Notes, Calendar, Photos)
+           - Automation -> Messages: allow Python / bluepill-server to control Messages.app (required for sending)
+        4. Verify everything is green:
+           bluepill-server doctor
 
       Cloud Managed Updates (BluePill Cloud Perk):
         When linked to BluePill Cloud, background stable update checks run
@@ -62,7 +67,7 @@ class Bluepill < Formula
   end
 
   test do
-    assert_match "bluepill-server 1.2.7", shell_output("#{bin}/bluepill-server --version")
+    assert_match "bluepill-server 1.2.13", shell_output("#{bin}/bluepill-server --version")
     help_out = shell_output("#{bin}/bluepill-server --help")
     if help_out.include?("preflight")
       assert_match "\"status\":", shell_output("#{bin}/bluepill-server preflight --no-fix")

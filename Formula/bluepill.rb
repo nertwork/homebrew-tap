@@ -9,7 +9,7 @@ class Bluepill < Formula
 
   bottle do
     root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.16"
-    sha256 cellar: :any_skip_relocation, all: "b21f32bf6571929eb50a5b56c79d16e617750d35d740a5085ff8699e8e0b0d28"
+    sha256 cellar: :any_skip_relocation, all: "d8650c45a6a3139eb76bba9383c79ceb4967b33a8d183c855ad64b16bbb353e5"
   end
 
   def install

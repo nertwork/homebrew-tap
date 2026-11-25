@@ -1,15 +1,15 @@
 class Bluepill < Formula
   desc "Headless zero-Electron macOS iMessage, SMS & RCS relay daemon + Cloud Relay + Web UI for BluePill"
-  homepage "https://bluepill.nertwork.com"
-  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.15.tar.gz"
-  sha256 "77c5f39468c257506d53c123a844974c10889d929aea57962570b9c87fb20722"
-  version "1.2.15"
+  homepage "https://bluepill.app"
+  url "https://github.com/nertwork/bluepill/archive/refs/tags/v1.2.16.tar.gz"
+  sha256 "f17fe98c6366c68c368dfefb467a665de4ed1ba6051c2a05819b0db77206f3b0"
+  version "1.2.16"
   license "MIT"
   head "https://github.com/nertwork/bluepill.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.15"
-    sha256 cellar: :any_skip_relocation, all: "a4af73956049c6bdee0f0fd635982056304e1f13fbd5ff863464f3ee090575e5"
+    root_url "https://github.com/nertwork/bluepill/releases/download/v1.2.16"
+    sha256 cellar: :any_skip_relocation, all: "b21f32bf6571929eb50a5b56c79d16e617750d35d740a5085ff8699e8e0b0d28"
   end
 
   def install
@@ -32,7 +32,7 @@ class Bluepill < Formula
     <<~EOS
       BluePill Cloud Setup (Default — Zero Port-Forwarding):
         1. bluepill-server login
-           (Opens https://bluepill.nertwork.com/portal to link your Mac to BluePill Cloud)
+           (Opens https://bluepill.app/portal to link your Mac to BluePill Cloud)
         2. brew services start bluepill
         3. Grant macOS Permissions (System Settings -> Privacy & Security):
            - Full Disk Access: allow Terminal / Homebrew Python (reads chat.db, Notes, Calendar, Photos)
@@ -67,7 +67,7 @@ class Bluepill < Formula
   end
 
   test do
-    assert_match "bluepill-server 1.2.15", shell_output("#{bin}/bluepill-server --version")
+    assert_match "bluepill-server 1.2.16", shell_output("#{bin}/bluepill-server --version")
     help_out = shell_output("#{bin}/bluepill-server --help")
     if help_out.include?("preflight")
       assert_match "\"status\":", shell_output("#{bin}/bluepill-server preflight --no-fix")
